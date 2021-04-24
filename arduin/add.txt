@@ -1,0 +1,17 @@
+int Thresh = 400;
+void setup() {
+  pinMode(A3, INPUT);
+  Serial.begin(9600);
+} 
+
+void loop(){
+gas_sensor_reading = analogRead(A3);
+if (gas_sensor_reading > Thresh)
+{
+tone(2,1000,20)
+}
+else 
+{
+notone(2)
+}
+}

@@ -7,10 +7,13 @@
 
 int fd=0;
 float td=0.0;
+int gd = 0;
 void setup() {
   Serial.begin(9600);
   pinMode(D5,INPUT);//light
-  pinMode(D2,INPUT);
+  pinMode(D6,INPUT);//temp
+  pinMode(D7,INPUT);//gas
+  
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.print("connecting");
   while (WiFi.status() != WL_CONNECTED) {
@@ -28,14 +31,13 @@ void loop() {
   fd = digitalRead(D5);
   Firebase.setInt("Light_value",fd);
 
-  td = analogRead(D2);
+  td = analogRead(D6);
   Firebase.setFloat("Temp_value",td);
+
+  gd = analogRead(D7);
+  Firebase.setFloat("Gas_value",gd);
   
   Serial.println(fd);
   Serial.println(td);
-//  if(fd == 1){
-//    Serial.println("sending 1");
-//    Firebase.setInt("Light_value",fd);
-//  }
-//  Firebase.setInt("Light_value", fd);
+  Serial.println(gd);
 }

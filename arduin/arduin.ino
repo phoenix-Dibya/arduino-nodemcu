@@ -1,10 +1,12 @@
+int Thresh = 400;
 void setup() {
   Serial.begin(9600);
   pinMode(A0,INPUT);//temp
   pinMode(A1,INPUT);//light
   pinMode(A2,INPUT);
   pinMode(A3,INPUT);//gas analog
-  
+
+  pinMode(2,OUTPUT);//buzzer
   pinMode(9,OUTPUT);//temp
   pinMode(10,OUTPUT);//light
   pinMode(11,OUTPUT);//gas analog
@@ -17,9 +19,16 @@ void loop() {
   
   analogWrite(9,temp[1]);//temp
   digitalWrite(10,digitalRead(A1));//light
-  analogWrite(11,analogRead(A3));//gas analog
-  Serial.print(digitalRead(A1));
 
+ int gas_sensor_reading = analogRead(A3);
+  if (gas_sensor_reading > Thresh)
+  {tone(2,1000,20);}
+  else 
+  {noTone(2);}
+  
+  analogWrite(11,gas_sensor_reading);//gas analog
+  
+  Serial.print(digitalRead(A1));
   Serial.print(temp[1]);
   Serial.println();
 }
